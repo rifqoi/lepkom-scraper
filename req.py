@@ -1,4 +1,6 @@
 import requests
+from tabulate import tabulate
+import pandas as pd
 import re
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -69,6 +71,15 @@ class Scraper:
             td_list.append(td)
 
         return th, td_list
+
+    def show_delete_praktikan(self, url):
+        th, td_list = self.get_delete_praktikan(url)
+
+        cols = pd.DataFrame(td_list, columns=th)
+        pdtabulate = lambda df: tabulate(
+            df, headers='keys', tablefmt='psql', showindex=False)
+
+        print(pdtabulate(cols))
 
 
 def main():
